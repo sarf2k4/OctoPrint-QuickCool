@@ -2,23 +2,30 @@
 	<div class="control-group">
 		<label class="control-label">{{ _('Enabled') }}</label>
 		<div class="controls">
-			<input type="checkbox" data-bind="checked: settingsViewModel.settings.plugins.CooldownNotification.Enabled">
+			<input type="checkbox" data-bind="checked: settingsViewModel.settings.plugins.QuickCool.Enabled">
 		</div>	
 	</div>
 	
 	<div class="control-group">
 		<label class="control-label">{{ _('Temperature Threshold') }}</label>
 		<div class="controls">
-			<input type="number" min="0" max="100" class="input-mini text-right" data-bind="value: settingsViewModel.settings.plugins.CooldownNotification.Threshold">
+			<input type="number" min="0" max="100" class="input-mini text-right" data-bind="value: settingsViewModel.settings.plugins.QuickCool.Threshold">
 			<span class="add-on">&deg;C</span>
 		</div>
 
 	</div>
 	
 	<div class="control-group">
+		<label class="control-label">{{ _('Filaments can be cooled') }}</label>
+		<div class="controls">
+			<textarea rows="10" class="block" id="settings_plugin_QuickCool_filament_cooling" data-bind="value: settingsViewModel.settings.plugins.QuickCool.filament_cooling"></textarea>
+		</div>
+	</div>
+	
+	<div class="control-group">
 		<label class="control-label">{{ _('GCODE to Execute') }}</label>
 		<div class="controls">
-			<textarea rows="10" class="block" id="settings_plugin_CooldownNotification_GCODE" data-bind="value: settingsViewModel.settings.plugins.CooldownNotification.GCODE"></textarea>
+			<textarea rows="10" class="block" id="settings_plugin_QuickCool_GCODE" data-bind="value: settingsViewModel.settings.plugins.QuickCool.GCODE"></textarea>
 		</div>
 	</div>
 	

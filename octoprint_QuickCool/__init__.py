@@ -32,7 +32,7 @@ class CooldownnotificationPlugin(octoprint.plugin.SettingsPlugin,
 	def get_settings_defaults(self):
 		return dict(
 			Enabled=False,
-			Threshold='40',
+			Threshold='50',
 			GCODE=""
 		)
 
@@ -81,17 +81,18 @@ class CooldownnotificationPlugin(octoprint.plugin.SettingsPlugin,
 
 	##~~Custom Functions
 	def checkTemp(self):
-		if 'bed' in self._printer.get_current_temperatures():
-			bedTemp = self._printer.get_current_temperatures()['bed']['actual']
+		#if 'bed' in self._printer.get_current_temperatures():
+			hotendTemp = self._printer.get_current_temperatures()['tool0']['actual']
 			threshold = int(self._settings.get(["Threshold"]))
-			self._logger.debug("Heatbed Temp: " + str(bedTemp))
-			if bedTemp <= threshold:
+			self._logger.debug("Heatbed Temp: " + str(hotendTemp))
+			if hotendTemp <= threshold:
 				self._logger.debug("Heatbed Temp Reached Threshold")
-				self._logger.debug("Heatbed Temp: " + str(bedTemp) + "   Type: " + str(type(bedTemp).__name__))
+				self._logger.debug("Heatbed Temp: " + str(hotendTemp) + "   Type: " + str(type(hotendTemp).__name__))
 				self._logger.debug("Threshold: " + str(threshold) + "   Type: " + str(type(threshold).__name__))
 				self.doExecute(self._settings.get(["GCODE"]))
 				self._TempTimer.cancel()
 
+# if any(filament_type in printed_file for filament_type in (self._settings.get(["filament_cooling"])).splitlines())
 	def doExecute(self, GCODE):
 		for line in GCODE.splitlines():
 			self._logger.debug("Sending GCODE: " + line)
@@ -128,7 +129,7 @@ class CooldownnotificationPlugin(octoprint.plugin.SettingsPlugin,
 # If you want your plugin to be registered within OctoPrint under a different name than what you defined in setup.py
 # ("OctoPrint-PluginSkeleton"), you may define that here. Same goes for the other metadata derived from setup.py that
 # can be overwritten via __plugin_xyz__ control properties. See the documentation for that.
-__plugin_name__ = "Cooldown Notification"
+__plugin_name__ = "Quick Cool"
 
 # Starting with OctoPrint 1.4.0 OctoPrint will also support to run under Python 3 in addition to the deprecated
 # Python 2. New plugins should make sure to run under both versions for now. Uncomment one of the following
